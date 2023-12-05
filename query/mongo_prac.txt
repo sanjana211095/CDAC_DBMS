@@ -1,0 +1,90 @@
+This is to create database
+=============================
+test> use DMart
+switched to db DMart
+
+this is to create colletions
+===============================
+DMart> db.createCollection('Employee')
+{ ok: 1 }
+DMart> db.createCollection('Product')
+{ ok: 1 }
+DMart> db.createCollection('Customer')
+{ ok: 1 }
+DMart> db.createCollection('Purchase')
+{ ok: 1 }
+
+-- list all colletions
+DMart> show collections
+Customer
+Employee
+Product
+Purchase
+
+insert document in colletion (Note: while using insertMany use [] braces to create multiple document)
+============================================================================
+DMart> db.Employee.insertMany([
+{ID:'E01',Name:'Harry',Designation:'Billing',Salary:1500},
+{ID:'E02',Name:'Rohit',Designation:'Helper',Salary:1000},
+{ID:'E03',Name:'Raj',Desingation:'Cleaner',Salary:1000}
+])
+
+DMart> db.Customer.insertMany([ 
+{ ID: 'C01', Name: 'Nitin', Phoneno: 12345, purchaseID: 'P01' }, 
+{ ID: 'C01', Name: 'Sanjana', Phoneno: 23456, purchaseID: 'P02' }
+])
+
+DMart> db.Purchase.insertMany([ 
+{ ID: 'P01', date: '2023-07-11', MOF: 'Card', ProductID: 'P01' }, 
+{ ID: 'P01', date: '2023-07-11', MOF: 'Card', ProductID: 'P02' }, 
+{ ID: 'P01', date: '2023-07-11', MOF: 'Card', ProductID: 'P03' }, 
+{ ID: 'P02', date: '2023-06-11', MOF: 'UPI', ProductID: 'P01' }
+] ) 
+
+
+Omit/display 2 document from colletion
+=======================================
+DMart> db.Employee.find().limit(2)
+[
+  {
+    _id: ObjectId("652e084de2113943d7200218"),
+    ID: 'E01',
+    Name: 'Harry',
+    Designation: 'Billing',
+    Salary: 1500
+  },
+  {
+    _id: ObjectId("652e084de2113943d7200219"),
+    ID: 'E02',
+    Name: 'Rohit',
+    Designation: 'Helper',
+    Salary: 1000
+  }
+]
+
+
+Use And operator
+=================
+In this I am saying to show me the purchase document who buys on mentioned date and paid through UPI
+
+DMart> db.Purchase.find({$and:[{date:'2023-06-11'},{MOF:'UPI'}]})
+[
+  {
+    _id: ObjectId("652e0a87e2113943d7200220"),
+    ID: 'P02',
+    date: '2023-06-11',
+    MOF: 'UPI',
+    ProductID: 'P01'
+  }
+]
+
+
+sort document by  key-value in desc (1: in ACS; -1: in DESC)
+==================================
+DMart> db.Employee.find().sort({ID:-1})
+
+
+show unique ID from purchase colletion
+=====================================
+DMart> db.Purchase.distinct('ID')
+[ 'P01', 'P02' ]

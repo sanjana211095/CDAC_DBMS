@@ -1,0 +1,844 @@
+======================================================================================
+================================== MySQL assessment ===================================
+
+create database
+---------------
+CREATE DATABASE college_management;
+
+create table
+------------
+Create table courses(
+CourseID varchar(4) primary key,
+`Name` varchar(6),
+Duration_days int,
+Duration int,
+Start_date date,
+End_date date
+);
+
+Create table department(
+ID varchar(3) primary key,
+`Name` varchar(50)
+);
+
+Create table exam(
+Subject_Id varchar(8) primary key,
+`Date` date,
+Start_Time time,
+End_Time time
+);
+
+Create table faculty_data(
+Fname varchar(50),
+Lname varchar(25),
+Subject_Id varchar(8),
+DepartmentID varchar(3)
+);
+
+Create table student(
+ID varchar(3) primary key,
+Fname varchar(50),
+Lname varchar(25),
+PhoneNo bigint,
+CourseID varchar(4),
+HostelID int,
+Room_number int
+);
+
+Create table subjects(
+ID varchar(10) primary key,
+`Name` varchar(25) NOT NULL,
+Completion_hours int,
+CourseID varchar(4)
+);
+
+Create table hostel(
+ID int primary key,
+Building varchar(25),
+Room_capacity int default 0
+);
+
+Creating a table by copying a table
+----------------------------------
+create table temp(
+Id int unique,
+Blocks varchar(20),
+Room int
+);
+
+insert into temp select * from hostel;
+select * from temp;
+
+
+Creating a table by copying structure of the table
+------------------------------------------------
+create table copytable as select * from hostel;
+
+
+Alter the table
+----------------
+Alter table  faculty_data  Add foreign key (Subject_Id) references subjects(ID);
+Alter table  faculty_data  Add foreign key (DepartmentID) references department(ID);
+Alter table  subjects 
+Add foreign key (CourseID) references courses(CourseID);
+Alter table  exam Add foreign key (Subject_Id) references subjects(ID);
+Alter table  student  Add foreign key (CourseID) references courses(CourseID);
+Alter table  student  Add foreign key (HostelID) references hostel(ID);
+Alter table subjects modify `Name` varchar(100);
+
+
+Entering the data in the table
+------------------------------
+INSERT INTO courses (CourseID, Name, Duration_days, Duration, Start_date, End_date) VALUES ('PG01', 'DAC', 180, 6, '2023-02-08', '2023-08-07');
+INSERT INTO courses (CourseID, Name, Duration_days, Duration, Start_date, End_date) VALUES ('PG02', 'DBDA', 180, 6, '2023-02-08 ', '2023-08-07');
+INSERT INTO courses (CourseID, Name, Duration_days, Duration, Start_date, End_date) VALUES ('PG03', 'DESD', 150, 5, '2023-02-08', '2023-07-08');
+INSERT INTO courses (CourseID, Name, Duration_days, Duration, Start_date, End_date) VALUES ('PG04', 'DAI', 150, 5, '2023-02-08', '2023-07-08');
+INSERT INTO courses (CourseID, Name, Duration_days, Duration, Start_date, End_date) VALUES ('PG05', 'DITISS', 180, 6, '2023-02-08', '2023-08-07');
+
+INSERT INTO department (ID, Name) VALUES ('D01', 'Machine Learning and Analytics');
+INSERT INTO department (ID, Name) VALUES ('D02', 'Internet of Things');
+INSERT INTO department (ID, Name) VALUES ('D03', 'Infrastructure and Systems security');
+INSERT INTO department (ID, Name) VALUES ('D04', 'Web Development');
+INSERT INTO department (ID, Name) VALUES ('D05', 'Quantitative Aptitude and Communication');
+INSERT INTO department (ID, Name) VALUES ('D06', 'Programming Language');
+INSERT INTO department (ID, Name) VALUES ('D07', 'Project Department');
+
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC01', '2022-02-11', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC02', '2022-02-13', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC03', '2022-02-14', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC04', '2022-02-15', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC05', '2022-02-16', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC06', '2022-02-17', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC07', '2022-02-18', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC08', '2022-02-20', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAC09', '2022-02-21', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA01', '2022-02-11', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA02', '2022-02-13', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA03', '2022-02-14', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA04', '2022-02-15', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA05', '2022-02-16', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA06', '2022-02-17', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA07', '2022-02-18', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA08', '2022-02-20', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA09', '2022-02-21', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DBDA10', '2022-02-22', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD01', '2022-02-11', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD02', '2022-02-13', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD03', '2022-02-14', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD04', '2022-02-15', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD05', '2022-02-16', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD06', '2022-02-17', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD07', '2022-02-18', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD08', '2022-02-20', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DESD09', '2022-02-2', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI01', '2022-02-11', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI02', '2022-02-13', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI03', '2022-02-14', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI04', '2022-02-15', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI05', '2022-02-16', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI06', '2022-02-17', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI07', '2022-02-18', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI08', '2022-02-20', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI09', '2022-02-21', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI10', '2022-02-22', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DAI11', '2022-02-23', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS01', '2022-02-11', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS02', '2022-02-13', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS03', '2022-02-14', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS04', '2022-02-15', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS05', '2022-02-16', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS06', '2022-02-17', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS07', '2022-02-18', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS08', '2022-02-20', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS09', '2022-02-21', '11:00:00', '13:00:00');
+INSERT INTO exam (Subject_Id, `Date`, Start_Time, End_Time) VALUES ('DITISS10', '2022-02-22', '11:00:00', '13:00:00');
+
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arun', 'Kumar', 'DAC01', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Suresh ', 'Reddy', 'DAC02', 'D04');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Ananya', 'Saxena', 'DAC03', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Ananya', 'Saxena', 'DAC04', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Suresh ', 'Reddy', 'DAC05', 'D04');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Suresh ', 'Reddy', 'DAC06', 'D04');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Ananya', 'Saxena', 'DAC07', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Durgesh', 'Sharma', 'DAC08', 'D05');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Samay', 'Gupta', 'DAC09', 'D07');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DBDA01', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arun', 'Kumar', 'DBDA02', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arun', 'Kumar', 'DBDA03', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Aditi', 'Sharma', 'DBDA04', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Neha', 'Gupta', 'DBDA05', 'D04');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Aditi', 'Sharma', 'DBDA06', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Aditi', 'Sharma', 'DBDA07', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Aditi', 'Sharma', 'DBDA08', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Durgesh', 'Sharma', 'DBDA09', 'D05');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Samay', 'Gupta', 'DBDA10', 'D07');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Durgesh', 'Sharma', 'DESD01', 'D05');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Ananya', 'Saxena', 'DESD02', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Ananya', 'Saxena', 'DESD03', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Rajiv', 'Singh', 'DESD04', 'D02');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Rajiv', 'Singh', 'DESD05', 'D02');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Rajiv', 'Singh', 'DESD06', 'D02');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Rajiv', 'Singh', 'DESD07', 'D02');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Rajiv', 'Singh', 'DESD08', 'D02');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Rajiv', 'Singh', 'DESD09', 'D02');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Aditi', 'Sharma', 'DAI01', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Aditi', 'Sharma', 'DAI02', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arun', 'Kumar', 'DAI03', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arun', 'Kumar', 'DAI04', 'D06');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Priya', 'Verma', 'DAI05', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Priya', 'Verma', 'DAI06', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Priya', 'Verma', 'DAI07', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Priya', 'Verma', 'DAI08', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Priya', 'Verma', 'DAI09', 'D01');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Durgesh', 'Sharma', 'DAI10', 'D05');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Samay', 'Gupta', 'DAI11', 'D07');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS01', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS02', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS03', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS04', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS05', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS06', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS07', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Arjun', 'Patel', 'DITISS08', 'D03');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Durgesh', 'Sharma', 'DITISS09', 'D05');
+INSERT INTO Faculty (Fname, Lname, SubjectID, DepartmentID) VALUES ('Samay', 'Gupta', 'DITISS10', 'D07');
+
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S01', 'Aarav', 'Yadav', 9876543210, 'PG01', 1, 10);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S02', 'Anaya', 'Patel', 9988776655, 'PG02', 2, 5);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S03', 'Advait', 'Singh', 8765432109, 'PG03', 1, 15);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S04', 'Amara', 'Gupta', 7654321098, 'PG04', 2, 3);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S05', 'Ahaan', 'Sharma', 9876123456, 'PG05', 1, 7);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S06', 'Aanya', 'Verma', 9999999999, 'PG01', 2, 12);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S07', 'Aditi', 'Kapoor', 8888888888, 'PG02', 1, 9);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S08', 'Arjun', 'Singh', 7777777777, 'PG03', 2, 6);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S09', 'Aaradhya', 'Sharma', 6666666666, 'PG04', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S10', 'Anvi', 'Yadav', 5555555555, 'PG05', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S11', 'Advika', 'Patel', 4444444444, 'PG01', 1, 4);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S12', 'Aryan', 'Gupta', 3333333333, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S13', 'Aahana', 'Singh', 2222222222, 'PG03', 2, 18);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S14', 'Advaita', 'Verma', 1111111111, 'PG04', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S15', 'Anya', 'Kapoor', 9999888877, 'PG05', 1, 19);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S16', 'Advik', 'Sharma', 8888999988, 'PG01', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S17', 'Aadhya', 'Singh', 7777000011, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S18', 'Arnav', 'Yadav', 6666111100, 'PG03', 2, 13);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S19', 'Anaya', 'Patel', 5555222211, 'PG04', 1, 2);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S20', 'Advit', 'Gupta', 4444333322, 'PG05', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S21', 'Aditya', 'Sharma', 3333444455, 'PG01', 2, 16);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S22', 'Aahil', 'Verma', 2222555566, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S23', 'Arush', 'Kapoor', 1111666677, 'PG03', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S24', 'Amaira', 'Singh', 9999000011, 'PG04', 1, 11);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S25', 'Avni', 'Yadav', 8888111122, 'PG05', 2, 14);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S26', 'Anika', 'Patel', 7777222233, 'PG01', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S27', 'Ayaan', 'Gupta', 6666333344, 'PG02', 1, 1);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S28', 'Aarush', 'Singh', 5555444455, 'PG03', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S29', 'Aarav', 'Verma', 444555566, 'PG04', 2, 8);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S30', 'Aarnav', 'Kapoor', 3333666677, 'PG05', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S31', 'Anvi', 'Sharma', 2222777788, 'PG01', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S32', 'Aaryan', 'Patel', 1111000022, 'PG02', 2, 20);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S33', 'Aarya', 'Sharma', 2222111133, 'PG03', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S34', 'Aayan', 'Verma', 3333222244, 'PG04', 1, 17);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S35', 'Ahaana', 'Kapoor', 4444333355, 'PG05', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S36', 'Aiza', 'Singh', 5555444466, 'PG01', 2, 4);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S37', 'Aiza', 'Gupta', 6666555577, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S38', 'Aizah', 'Yadav', 7777666688, 'PG03', 1, 19);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S39', 'Yash', 'Patel', 8888777799, 'PG04', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S40', 'Bhumika', 'Sharma', 9999888800, 'PG05', 1, 14);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S41', 'Bhoomi', 'Verma', 1111999900, 'PG01', 2, 16);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S42', 'Shubham', 'Singh', 2222000011, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S43', 'Manoj', 'Patel', 3333111122, 'PG03', 1, 9);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S44', 'Pankaj', 'Gupta', 4444222233, 'PG04', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S45', 'Rohit', 'Yadav', 5555333344, 'PG05', 2, 12);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S46', 'Rahul', 'Kapoor', 6666444455, 'PG01', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S47', 'Preeti', 'Singh', 7777555566, 'PG02', 1, 3);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S48', 'Payal', 'Sharma', 8888666677, 'PG03', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S49', 'Sneha', 'Verma', 9999777788, 'PG04', 2, 10);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S50', 'Snehal', 'Patel', 1111888899, 'PG05', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S51', 'Nitin', 'Kumar', 1111000022, 'PG02', 2, 20);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S52', 'Rajbir', 'Yadav', 2222111133, 'PG03', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S53', 'Nikita', 'Verma', 3333222244, 'PG04', 1, 17);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S54', 'Sanjana', 'Sharma', 4444333355, 'PG05', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S55', 'Srushti', 'Singh', 5555444466, 'PG01', 2, 4);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S56', 'Shruti', 'Gupta', 6666555577, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S57', 'Hemlata', 'Yadav', 7777666688, 'PG03', 1, 19);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S58', 'Sakshi', 'Patel', 8888777799, 'PG04', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S59', 'Sameer', 'Sharma', 9999888800, 'PG05', 1, 14);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S60', 'Trupti', 'Verma', 1111999900, 'PG01', 2, 16);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S61', 'Renuka', 'Singh', 2222000011, 'PG02', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S62', 'Ram', 'Patel', 3333111122, 'PG03', 1, 9);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S63', 'Gaurav', 'Gupta', 4444222233, 'PG04', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S64', 'Kartikey', 'Yadav', 5555333344, 'PG05', 2, 12);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S65', 'Shantanu', 'Kapoor', 6666444455, 'PG01', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S66', 'Pratik', 'Singh', 7777555566, 'PG02', 1, 3);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S67', 'Varun', 'Sharma', 8888666677, 'PG03', 'nan', 'nan');
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S68', 'Saurabh', 'Verma', 9999777788, 'PG04', 2, 10);
+INSERT INTO student (ID, Fname, Lname, PhoneNo, CourseID, HostelID, Room_number) VALUES ('S69', 'Jitendra', 'Patel', 1111888899, 'PG05', 'nan', 'nan');
+
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC01', 'C++ Programming', 72, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC02', 'Operating System and Software Development', 72, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC03', 'OOPS with JAVA', 112, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC04', 'DSA using JAVA', 72, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC05', 'Database Technologies', 72, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC06', 'Web Programming Technologies', 112, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC07', 'Web-based Java Programming', 104, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC08', 'Aptitude and Effective Communication', 80, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAC09', 'Project', 120, 'PG01');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA01', 'Linux Programming and Cloud Computing', 50, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA02', 'Python and  R programming', 80, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA03', 'OOPS with JAVA', 90, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA04', 'Statistics', 90, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA05', 'DBMS', 90, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA06', 'Big Data Technologies', 150, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA07', 'Data Visualization', 50, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA08', 'Machine Learning', 120, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA09', 'Aptitude and Effective Communication', 90, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DBDA10', 'Project', 90, 'PG02');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD01', 'Aptitude and Effective Communication', 90, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD02', 'DSA', 90, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD03', 'Embedded C programming', 120, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD04', 'Embedded Linux Device Drivers', 90, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD05', 'Internet of Things', 90, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD06', 'Microcontroller Programming and Interfacing', 120, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD07', 'Project and Seminar', 150, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD08', 'Real-time Operating Systems', 60, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DESD09', 'Embedded Operating Systems', 90, 'PG03');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI01', 'Fundamental of AI', 40, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI02', 'Mathematics for AI', 40, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI03', 'Java Programming', 60, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI04', 'Advance Programming using Python', 90, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI05', 'Data Analytics', 90, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI06', 'Machine Learning', 100, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI07', 'Deep Machine Learning', 90, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI08', 'Natural Language Processing and Computer Vision', 100, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI09', 'AI Compute Plateforms and Trends', 110, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI10', 'Aptitude and Effective Communication', 90, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DAI11', 'Project', 90, 'PG04');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS01', 'Fundamental of Computer Network', 80, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS02', 'Concepts of Operating System and Administration', 180, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS03', 'Security Concepts', 180, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS04', 'Compilance Audit', 30, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS05', 'Network Defence and Countermeasures', 70, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS06', 'Cyber Forensics', 44, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS07', 'Public key Infrastrucutre', 50, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS08', 'IT Infrastructure Mangement and DevOps', 86, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS09', 'Aptitude and Effective Communication', 90, 'PG05');
+INSERT INTO subject (ID, `Name`, Completion_hours, CourseID) VALUES ('DITISS10', 'Project', 90, 'PG05');
+
+Update command
+--------------
+update student  set CourseID='PG02' where ID='S01';
+update student  set CourseID='PG02' where ID='S05';
+update student  set CourseID='PG02' where ID='S023';
+
+Delete command
+--------------
+delete from student where ID IN ('S10','S12','S21') ;
+
+Truncate commmand
+-----------------
+truncate table hostel;
+
+Drop command
+-------------
+drop table hostel;
+
+select command
+--------------
+select * from subjects;
+select * from hostel;
+select * from student;
+select * from exam;
+select * from faculty;
+
+where command
+----------------
+select Fname,hostelID from student where CourseID='PG02'  and HostelID is not null;
+
+AND,OR,IN,NOT IN,BETWEEN
+--------------------------------
+select Fname,hostelID from student where CourseID='PG02'  and HostelID is not null;
+select Fname,CourseID from student where CourseID='PG02' or CourseID= 'PG03';
+select Fname,CourseID from student where CourseID in ('PG02','PG01','PG04');
+select Fname,CourseID from student where CourseID not in ('PG02','PG01','PG04');
+select Fname,CourseID from student where ID between 'S30' and 'S45';
+
+JOIN
+-----
+select c.CourseID,c.`Name`,s.ID,s.`Name`
+from courses c
+inner join subjects s on c.CourseID = s.CourseID;
+
+GROUP BY, HAVING, ORDER BY
+----------------------------
+select Fname,Lname ,count(Subject_Id) as total_sub from faculty_data
+group by Fname,Lname;
+
+select Fname,Lname ,count(Subject_Id) as total_sub from faculty_data
+group by Fname,Lname having total_sub >4;
+
+select * from Student order by Fname ASC, Lname;
+
+Subqueries command
+------------------
+select `Name`,Completion_hours from subjects 
+where ID in (select Subject_Id 
+from faculty_data 
+where Fname='Arun' and Lname='Kumar');
+
+View command
+------------------
+create view view_sub as 
+select `Name`,Completion_hours 
+from subjects ;
+select * from view_sub;
+
+Stored Procedure 
+------------------
+Delimiter @
+
+create procedure FacultySubject(IN firstname varchar(20),IN Lastname varchar(20))
+begin
+select `Name`,Completion_hours from subjects 
+where ID in (select Subject_Id 
+from faculty_data 
+where Fname=firstname and Lname=Lastname);
+end @
+Delimiter ;
+call FacultySubject('Ananya','Saxena');
+call FacultySubject('Arun','Kumar');
+
+Trigger 
+------------------
+
+DELIMITER //
+CREATE TRIGGER student_assignment_trigger AFTER INSERT ON Student
+FOR EACH ROW
+BEGIN
+    -- Update current_occupancy when a student is assigned to a hostel
+    IF NEW.hostel_id IS NOT NULL THEN
+        UPDATE Hostel SET current_occupancy = current_occupancy + 1 WHERE id = NEW.hostel_id;
+    END IF;
+    -- Update current_occupancy when a student is unassigned from a hostel
+    IF NEW.hostel_id IS NULL AND OLD.hostel_id IS NOT NULL THEN
+        UPDATE Hostel SET current_occupancy = current_occupancy - 1 WHERE id = OLD.hostel_id;
+    END IF;
+END;
+//
+DELIMITER ;
+
+
+Window function
+------------------
+
+select
+row_number() over (partition by CourseID order by Completion_hours asc) as SNo,
+CourseID,`Name`,
+dense_rank() over(partition by CourseID order by Completion_hours) as SortedHoursDenseRank,
+rank() over(partition by CourseID order by Completion_hours) as SortedHoursRank
+from subjects; 
+
+
+Grant/Revoke
+------------
+GRANT ALL ON Users TO 'CDAC'@'localhost';
+REVOKE SELECT ON  Users FROM 'CDAC'@'localhost'; 
+
+
+
+======================================================================================
+================================== MongoDB assessment =================================
+
+View Database
+------------------------
+> show databases
+
+Select database
+------------------------
+> use dbda
+
+List all collections
+------------------------
+dbda> show collections
+
+Create collection
+-------------------------
+dbda> db.createCollection('Student')
+
+
+Insert document in collection
+------------------------------
+dbda> db.Student.insertMany([{Id: 'S01',FName:'Sanjana',LName:'Bafana',Gender:'F'},{Id: 'S02',FName:'Nitin',LName:'Diwakar',Gender:'M'},{Id: 'S03',FName:'Srushti',LName:'Patil',Gender:'F'},{Id: 'S04',FName:'Rajbir',LName:'Singh',Gender:'M'}])
+
+
+List all document 
+----------------------
+dbda> db.Student.find()
+
+Drop collection
+-----------------------
+dbda> db.Book.drop()
+
+Update key value (set statement)
+-----------------------
+dbda> db.Student.update({Id:'S04'},{$set:{Gender:'Male'}})
+dbda> db.Student.update({Id:'S02'},{$set:{Gender:'Male'}})
+dbda> db.Student.find()
+
+
+Update key value (unset statement)
+-----------------------
+dbda> db.Student.update({Id:'S04'},{$unset:{Gender:'M'}})
+dbda> db.Student.find({Id:'S04'})
+dbda> db.Student.find({Id:'S01'})
+
+
+skip document
+--------------
+dbda> db.Student.find().skip(2)
+
+
+Limit document(show only 1 document)
+------------------------------------
+dbda> db.Student.find().limit(1)
+
+Update each document if met condition(set)
+------------------------------------------
+dbda> db.Student.updateMany({Id:{$in:['S01','S02']}},{$set:{Marks:55}})
+dbda> db.Student.update({Id:'S03'},{$set:{Marks:45}})
+dbda> db.Student.update({Id:'S04'},{$set:{Marks:65}})
+dbda> db.Student.find()
+
+
+List document with <,>,<= and >= condition
+--------------------------------------------
+dbda> db.Student.find({Marks:{$lt:50}})
+dbda> db.Student.find({Marks:{$gt:50}})
+dbda> db.Student.find({Marks:{$gte:55}})
+dbda> db.Student.find({Marks:{$lte:55}})
+
+
+Or/And condition
+------------------------------------------
+dbda> db.Student.find({$or:[{Marks:{$lt:50}},{Marks:{$gt:60}}]},{_id:0,Id:1,Marks:1})
+dbda> db.Student.find({$or:[{Marks:{$lt:50}},{Marks:{$gt:60}}],$and:[{Gender:'Male'}]},{_id:0,Id:1,Marks:1})
+
+
+Distinct value of provided key
+---------------------------------
+dbda> db.Student.distinct('Gender')
+
+Sort document
+----------------------
+dbda> db.Student.find().sort({Marks:1})
+
+Group by 
+-----------
+dbda> db.Student.aggregate([{$group:{_id:'$Gender',GenderCount:{$sum:1}}}])
+dbda> db.Student.aggregate([{$group:{_id:'$Marks',MarksCount:{$sum:1}}}])
+
+dbda> db.Student.find({Gender:'F',Marks:55})
+
+
+findAndModify
+--------------
+dbda>db.Student.findAndModify({query:{Id:'S02'},update:{$inc:{Marks:10}}})
+
+deleteOne/deleteMany
+---------------------
+dbda> db.Student.deleteOne({Marks:55})
+dbda> db.Student.deleteMany({Marks:45})
+
+
+Remove operation
+-------------------
+dbda> db.Student.remove({Marks:65})
+
+Bulk operation
+----------------
+dbda> var bulk = db.Student.initializeUnorderedBulkOp();
+dbda> bulk.insert({Id:'S05',Fname:'Harshad',LName:'Patil',Gender:'M',Marks:60});
+dbda> bulk.insert({Id:'S01',Fname:'Sanjana',LName:'Bafana',Gender:'F',Marks:70});
+dbda> bulk.execute()
+
+dbda> db.Student.find()
+
+getIndexes operation
+---------------------
+dbda> db.Student.getIndexes()
+
+Count document
+--------------------
+dbda> db.Student.countDocuments()
+
+Import data
+--------------
+C:\Program Files\MongoDB\Server\6.0\bin>mongoimport --type csv --db dbda --collection Student --file "C:\Users\sanja\OneDrive\Desktop\student_data_updated.csv" --headerline
+
+
+
+=============================================================================================
+====================================== Apache Cassendra assessment ======================================
+
+List all Keyspaces
+------------------
+token@cqlsh> DESC keyspace;
+
+Use Keyspaces
+------------------
+token@cqlsh> use dbdalms;
+
+Create Table
+-------------
+token@cqlsh:dbdalms> Create Table Student(ID int PRIMARY KEY,Fname text,Lname text); 
+
+Insert into table
+------------------
+token@cqlsh:dbdalms> Insert Into Student(ID,Fname,Lname) values (01,'Sanjana','Bafana');
+
+Update command
+---------------
+token@cqlsh:dbdalms> update Student set Fname ='Nitin' where ID = 01;
+
+Truncate command
+-----------------
+token@cqlsh:dbdalms> Truncate table Student;
+
+Alter command
+--------------
+token@cqlsh:dbdalms> Alter table Student add age int;
+token@cqlsh:dbdalms> Alter table Student add gender text; 
+
+Select command
+---------------
+token@cqlsh:dbdalms> select * from Student;
+
+drop command
+--------------
+token@cqlsh:dbdalms> drop table Student;
+
+
+Batch Operation
+----------------
+token@cqlsh:dbdalms> CREATE Table Student(ID int PRIMARY KEY,Fname text,Lname text);
+token@cqlsh:dbdalms> Begin Batch  insert into Student(ID,Fname,Lname) values(01,'Sanjana','Bafana'); insert into Student(ID,Fname,Lname) values(02,'Nitin','Diwakar'); insert into Student(ID,Fname) values(03,'Rajbir'); Apply Batch;
+token@cqlsh:dbdalms> select * from Student;
+token@cqlsh:dbdalms> Begin Batch
+           ... update Student set Lname='Singh' where ID= 03;
+           ... delete from Student where ID = 01;
+           ... Apply Batch;
+
+List datatype
+--------------
+token@cqlsh:dbdalms> Create table Subject (ID int primary key,Marks int,Sname  list <text>);
+token@cqlsh:dbdalms> insert into Subject(ID,Marks,Sname) values (1,50,['Cpp','Python']);
+token@cqlsh:dbdalms> select * from Subject;
+
+
+Map datatype
+-------------
+token@cqlsh:dbdalms> Create table SubjectMap (ID int primary key,Marks int,Sname  map <text,text>)
+token@cqlsh:dbdalms> insert into SubjectMap(ID,Marks,Sname) values (1,50,{'Cpp':'Programming','Python':'Programming'})
+           ... ;
+token@cqlsh:dbdalms> select * from SubjectMap
+           ... ;
+
+Set datatype
+-------------
+token@cqlsh:dbdalms> create table SubjectSet(ID int primary key,subject set<text>);
+token@cqlsh:dbdalms> insert into SubjectSet(ID,subject) values(1,{'Cpp','Cpp','Python','Java'});
+token@cqlsh:dbdalms> select * from SubjectSet;
+
+
+User-define datatype
+---------------------
+token@cqlsh:dbdalms> create type user_info(age int, country text);
+
+
+=============================================================================================
+===========================================Redis assessment ============================================
+
+set my_name rahul
+get my_name
+
+set my_score 78
+get my_score
+
+exists my_names
+0
+
+exists my_name
+1
+
+getset my_name amit
+rahul
+
+get my_name
+amit
+
+keys *nam* <-- pattern search
+
+Config Set Requirepass <password> <-- to set password
+
+auth <password> <-- to authorise the password
+
+Config Set Requirepass " <-- will disable the password
+
+rename my_score my_runs_scored <-- rename key my_score to my_runs_scored
+
+move my_runs_scored 0 <-- move the key my_runs_scored to database 0
+
+del my_runs_scored <-- will delete the key my_runs_scored
+
+type my_courses <-- will show the type of value key my_courses holding --> hash
+
+expire my_runs 10 <-- will delete the key ‘my_runs’ in 10 seconds
+
+STRING COMMAND
+
+SET
+
+SETEX --> setex my_salary 10 555 (10 <-- will hold the value only for 10 seconds)
+
+GET
+
+GETRANGE --> GETRANGE my_name 0 5 <-- will get the string stored in my_name from 0 to 5 characters
+
+GETSET
+
+APPEND
+
+INCR ---> INCR my_salary
+
+DECR --> DECR my_salary
+
+INCRBY --> INCRBY my_salary 100
+
+STRLEN --> STRLEN my_name <-- to check the length of my_name
+
+List
+
+lpush my_courses dac
+lpush my_courses dbda
+lpush my_courses ditiss
+lpush my_courses dbda
+
+lrange my_courses 0 2
+1) "dbda"
+
+2) "ditiss"
+
+3) "dbda"
+
+lrange my_courses 0 3
+1) "dbda"
+
+2) "ditiss"
+
+3) "dbda"
+
+4) "dac"
+
+rpush my_singers arijit
+rpush my_singers papon
+rpush my_singers mika
+lrange my_singers 0 2
+
+1) "arijit"
+
+2) "papon"
+
+3) "mika"
+
+llen my_singers <-- will show the number of elements in List my_singers 4
+
+lrem my_singers 1 mika <- will remove mika from list my_singers ONCE (1)
+
+lrem my_singers 2 mika <- will remove mika from list my_singers TWICE (2) (assuming mika is present twice in list)
+
+lindex my_singers 3 <- getting element from list using index value
+
+set
+
+sadd my_team saurav
+
+sadd my_team yuvi
+
+sadd my_team ashwin
+
+sadd my_team saurav <-- set will not take duplicate values 0
+
+smembers my_team <- listing the members from the set
+
+srem my_team SAURAV <- removing element from set
+
+sunion my_team_A my_team_B <-- Union of two sets
+
+sinter my_team_A my_team_B <-- Intersection of two sets
+
+srem my_team_A rohit <-- removes the element from set
+
+set my_runs 2300
+incr my_runs <-- increment by default is always by 1
+
+incrby my_runs 100 < -- will increase my_runs by 100
+
+decr my_runs <-- decrease by default is always by 1
+
+decrby my_runs 31 < -- will decrease my_runs by 31
+
+smove my_team_A my_team_B raina <- will move raina from my_team_A to my_team_B
+
+sorted set
+
+zadd my_field_games 1 football
+
+zadd my_field_games 2 cricket
+
+zadd my_field_games 3 rugby
+
+zadd my_field_games 4 hockey 5 baseball
+
+zcard my_field_games <-- will show number of elements in sorted set
+
+zrange my_field_games 0 4 <- will list members of sorted set
+
+zrange my_field_games 2 2 <-- to get single element
+
+zrem my_field_games baseball <-- will remove base ball from my_field_games
+
+zrank my_field_games hockey <-- will show the index position of hockey in set my_field_games
+
+Hash
+
+HMSET my_locations I1 bombay I2 delhi I3 bangalore I4 gurugram <-- will add four locations in Hash location
+
+HGETALL my_locations <-- will get all members from Hash
+
+hlen my_locations <-- will show number of elements in Hash
+
+hmget my_locations I2 <-- will show the value of key I2 in hash my_locations
+
+hkeys my_locations <-- will list the KEYS in my_locations
+
+hset my_locations I5 Darjeeling <-- will add another key-value I5-Darjeeling in Hash my_locations
+
+hdel my_locations I6 Darjeeling <-- will delete I6-Darjeeling from my_locations
+
+hkeys my_locations <-- will show the list of KEYS in my_locations
+
+hvals my_locations <-- will show the list of VALUES in my_locations
+
+hgetall my_locations <-- will show the list of KEY-VALUES in my_locations
+
+Transaction
+
+multi <-- start of (batch) transactions
+
+ping hi
+
+ping hello
+
+set my_name ram
+
+get my_name
+
+exec <-- will execute all commands in queue together

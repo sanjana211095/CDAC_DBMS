@@ -1,0 +1,82 @@
+====================================== Apache Cassendra ======================================
+
+List all Keyspaces
+------------------
+token@cqlsh> DESC keyspace;
+
+Use Keyspaces
+------------------
+token@cqlsh> use dbdalms;
+
+Create Table
+-------------
+token@cqlsh:dbdalms> Create Table Student(ID int PRIMARY KEY,Fname text,Lname text); 
+
+Insert into table
+------------------
+token@cqlsh:dbdalms> Insert Into Student(ID,Fname,Lname) values (01,'Sanjana','Bafana');
+
+Update command
+---------------
+token@cqlsh:dbdalms> update Student set Fname ='Nitin' where ID = 01;
+
+Truncate command
+-----------------
+token@cqlsh:dbdalms> Truncate table Student;
+
+Alter command
+--------------
+token@cqlsh:dbdalms> Alter table Student add age int;
+token@cqlsh:dbdalms> Alter table Student add gender text; 
+
+Select command
+---------------
+token@cqlsh:dbdalms> select * from Student;
+
+drop command
+--------------
+token@cqlsh:dbdalms> drop table Student;
+
+
+Batch Operation
+----------------
+token@cqlsh:dbdalms> CREATE Table Student(ID int PRIMARY KEY,Fname text,Lname text);
+token@cqlsh:dbdalms> Begin Batch  insert into Student(ID,Fname,Lname) values(01,'Sanjana','Bafana'); insert into Student(ID,Fname,Lname) values(02,'Nitin','Diwakar'); insert into Student(ID,Fname) values(03,'Rajbir'); Apply Batch;
+token@cqlsh:dbdalms> select * from Student;
+token@cqlsh:dbdalms> Begin Batch
+           ... update Student set Lname='Singh' where ID= 03;
+           ... delete from Student where ID = 01;
+           ... Apply Batch;
+
+List datatype
+--------------
+token@cqlsh:dbdalms> Create table Subject (ID int primary key,Marks int,Sname  list <text>);
+token@cqlsh:dbdalms> insert into Subject(ID,Marks,Sname) values (1,50,['Cpp','Python']);
+token@cqlsh:dbdalms> select * from Subject;
+
+
+Map datatype
+-------------
+token@cqlsh:dbdalms> Create table SubjectMap (ID int primary key,Marks int,Sname  map <text,text>)
+token@cqlsh:dbdalms> insert into SubjectMap(ID,Marks,Sname) values (1,50,{'Cpp':'Programming','Python':'Programming'})
+           ... ;
+token@cqlsh:dbdalms> select * from SubjectMap
+           ... ;
+
+Set datatype
+-------------
+token@cqlsh:dbdalms> create table SubjectSet(ID int primary key,subject set<text>);
+token@cqlsh:dbdalms> insert into SubjectSet(ID,subject) values(1,{'Cpp','Cpp','Python','Java'});
+token@cqlsh:dbdalms> select * from SubjectSet;
+
+
+User-define datatype
+---------------------
+token@cqlsh:dbdalms> create type user_info(age int, country text);
+token@cqlsh:dbdalms> create table SubjectUser(name text primary key,detail FROZEN<user_info>);
+token@cqlsh:dbdalms> insert into SubjectUser(name,detail)values('Nitin',{age:21,country:'India'});
+token@cqlsh:dbdalms> select * from SubjectUser;
+
+create index
+-------------
+token@cqlsh:dbdalms> create index UserIndex ON Student (Fname);

@@ -1,0 +1,129 @@
+================================== MongoDB Assesment ==================================
+
+View Database
+------------------------
+> show databases
+
+Select database
+------------------------
+> use dbda
+
+List all collections
+------------------------
+dbda> show collections
+
+Create collection
+-------------------------
+dbda> db.createCollection('Student')
+
+
+Insert document in collection
+------------------------------
+dbda> db.Student.insertMany([{Id: 'S01',FName:'Sanjana',LName:'Bafana',Gender:'F'},{Id: 'S02',FName:'Nitin',LName:'Diwakar',Gender:'M'},{Id: 'S03',FName:'Srushti',LName:'Patil',Gender:'F'},{Id: 'S04',FName:'Rajbir',LName:'Singh',Gender:'M'}])
+
+
+List all document 
+----------------------
+dbda> db.Student.find()
+
+Drop collection
+-----------------------
+dbda> db.Book.drop()
+
+Update key value (set statement)
+-----------------------
+dbda> db.Student.update({Id:'S04'},{$set:{Gender:'Male'}})
+dbda> db.Student.update({Id:'S02'},{$set:{Gender:'Male'}})
+dbda> db.Student.find()
+
+
+Update key value (unset statement)
+-----------------------
+dbda> db.Student.update({Id:'S04'},{$unset:{Gender:'M'}})
+dbda> db.Student.find({Id:'S04'})
+dbda> db.Student.find({Id:'S01'})
+
+
+skip document
+--------------
+dbda> db.Student.find().skip(2)
+
+
+Limit document(show only 1 document)
+------------------------------------
+dbda> db.Student.find().limit(1)
+
+Update each document if met condition(set)
+------------------------------------------
+dbda> db.Student.updateMany({Id:{$in:['S01','S02']}},{$set:{Marks:55}})
+dbda> db.Student.update({Id:'S03'},{$set:{Marks:45}})
+dbda> db.Student.update({Id:'S04'},{$set:{Marks:65}})
+dbda> db.Student.find()
+
+
+List document with <,>,<= and >= condition
+--------------------------------------------
+dbda> db.Student.find({Marks:{$lt:50}})
+dbda> db.Student.find({Marks:{$gt:50}})
+dbda> db.Student.find({Marks:{$gte:55}})
+dbda> db.Student.find({Marks:{$lte:55}})
+
+
+Or/And condition
+------------------------------------------
+dbda> db.Student.find({$or:[{Marks:{$lt:50}},{Marks:{$gt:60}}]},{_id:0,Id:1,Marks:1})
+dbda> db.Student.find({$or:[{Marks:{$lt:50}},{Marks:{$gt:60}}],$and:[{Gender:'Male'}]},{_id:0,Id:1,Marks:1})
+
+
+Distinct value of provided key
+---------------------------------
+dbda> db.Student.distinct('Gender')
+
+Sort document
+----------------------
+dbda> db.Student.find().sort({Marks:1})
+
+Group by 
+-----------
+dbda> db.Student.aggregate([{$group:{_id:'$Gender',GenderCount:{$sum:1}}}])
+dbda> db.Student.aggregate([{$group:{_id:'$Marks',MarksCount:{$sum:1}}}])
+
+dbda> db.Student.find({Gender:'F',Marks:55})
+
+
+findAndModify
+--------------
+dbda>db.Student.findAndModify({query:{Id:'S02'},update:{$inc:{Marks:10}}})
+
+deleteOne/deleteMany
+---------------------
+dbda> db.Student.deleteOne({Marks:55})
+dbda> db.Student.deleteMany({Marks:45})
+
+
+Remove operation
+-------------------
+dbda> db.Student.remove({Marks:65})
+
+Bulk operation
+----------------
+dbda> var bulk = db.Student.initializeUnorderedBulkOp();
+dbda> bulk.insert({Id:'S05',Fname:'Harshad',LName:'Patil',Gender:'M',Marks:60});
+dbda> bulk.insert({Id:'S01',Fname:'Sanjana',LName:'Bafana',Gender:'F',Marks:70});
+dbda> bulk.execute()
+
+dbda> db.Student.find()
+
+getIndexes operation
+---------------------
+dbda> db.Student.getIndexes()
+
+Count document
+--------------------
+dbda> db.Student.countDocuments()
+
+Import data
+--------------
+C:\Program Files\MongoDB\Server\6.0\bin>mongoimport --type csv --db dbda --collection Student --file "C:\Users\sanja\OneDrive\Desktop\student_data_updated.csv" --headerline
+
+
